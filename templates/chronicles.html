@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Источники</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body class="chronicles-page">
+
+    <main class="chronicles-container">
+
+        <header class="page-header">
+            <h1>Источники</h1>
+            <p>Летописные источники по истории Руси</p>
+        </header>
+
+        <form class="filter-form" method="get" action="/chronicles">
+            <div class="filter-field">
+                <label for="year">Год создания</label>
+
+                <input
+                    type="number"
+                    id="year"
+                    name="year"
+                    value="{{ selected_year or '' }}"
+                    placeholder="Например, 1377"
+                >
+            </div>
+
+            <button type="submit">
+                Фильтровать
+            </button>
+        </form>
+
+        <section class="chronicles-grid">
+
+            {% for chronicle in chronicles %}
+
+                <article class="chronicle-card">
+
+                    <a href="/feed/{{ chronicle['id'] }}" class="chronicle-link">
+
+                        <img
+                            class="chronicle-image"
+                            src="{{ chronicle['изображение'] }}"
+                            alt="{{ chronicle['название'] }}"
+                        >
+
+                        <div class="chronicle-content">
+
+                            <h2>
+                                {{ chronicle["название"] }}
+                            </h2>
+
+                            <p class="chronicle-type">
+                                {{ chronicle["тип_источника"] }}
+                            </p>
+
+                            <div class="chronicle-meta">
+
+                                <span>
+                                    {{ chronicle["год_создания"] }}
+                                </span>
+
+                                <span>
+                                    ❤️ {{ chronicle["лайки"]|length }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </article>
+
+            {% endfor %}
+
+        </section>
+
+        {% if not chronicles %}
+            <div class="empty-result">
+                <p>
+                    Источники с таким годом создания не найдены.
+                </p>
+            </div>
+        {% endif %}
+
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="/feed/1">
+            Лента
+        </a>
+
+        <a href="/add">
+            ＋ Добавить
+        </a>
+    </nav>
+
+</body>
+</html>

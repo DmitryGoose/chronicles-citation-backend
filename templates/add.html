@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить источник</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body class="add-page">
+
+    <main class="add-container">
+
+        <header class="page-header">
+            <h1>Добавить источник</h1>
+            <p>Заполните сведения о летописном источнике</p>
+        </header>
+
+        <form class="add-form">
+
+            <div class="form-section">
+
+                <div class="form-field">
+                    <label for="название">
+                        Название источника
+                    </label>
+
+                    <input
+                        type="text"
+                        id="название"
+                        name="название"
+                        placeholder="Например, Повесть временных лет"
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label for="тип_источника">
+                        Тип источника
+                    </label>
+
+                    <input
+                        type="text"
+                        id="тип_источника"
+                        name="тип_источника"
+                        placeholder="Например, летописный свод"
+                    >
+                </div>
+
+            </div>
+
+
+            <div class="form-section">
+
+                <h2>Период и дата создания</h2>
+
+                <div class="form-row">
+
+                    <div class="form-field">
+                        <label for="год_создания">
+                            Год создания
+                        </label>
+
+                        <input
+                            type="number"
+                            id="год_создания"
+                            name="год_создания"
+                            placeholder="1116"
+                        >
+                    </div>
+
+                    <div class="form-field">
+                        <label for="период_описания_от">
+                            Описание от
+                        </label>
+
+                        <input
+                            type="number"
+                            id="период_описания_от"
+                            name="период_описания_от"
+                            placeholder="852"
+                        >
+                    </div>
+
+                    <div class="form-field">
+                        <label for="период_описания_до">
+                            Описание до
+                        </label>
+
+                        <input
+                            type="number"
+                            id="период_описания_до"
+                            name="период_описания_до"
+                            placeholder="1110"
+                        >
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-section">
+
+                <div class="form-field">
+                    <label for="язык">
+                        Язык
+                    </label>
+
+                    <input
+                        type="text"
+                        id="язык"
+                        name="язык"
+                        placeholder="Например, древнерусский"
+                    >
+                </div>
+
+            </div>
+
+
+            <div class="form-section">
+
+                <div class="form-field">
+                    <label for="заголовок">
+                        Заголовок
+                    </label>
+
+                    <input
+                        type="text"
+                        id="заголовок"
+                        name="заголовок"
+                        placeholder="Заголовок публикации"
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label for="описание">
+                        Описание
+                    </label>
+
+                    <textarea
+                        id="описание"
+                        name="описание"
+                        placeholder="Краткое описание источника"
+                    ></textarea>
+                </div>
+
+            </div>
+
+
+            <div class="form-section">
+
+                <h2>Медиа</h2>
+
+                <div class="form-field">
+                    <label for="изображение">
+                        Изображение
+                    </label>
+
+                    <input
+                        type="text"
+                        id="изображение"
+                        name="изображение"
+                        placeholder="URL изображения из MinIO"
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label for="видео">
+                        Видео
+                    </label>
+
+                    <input
+                        type="text"
+                        id="видео"
+                        name="видео"
+                        placeholder="URL видео из MinIO"
+                    >
+                </div>
+
+            </div>
+
+
+            <button type="submit" class="add-button">
+                Добавить источник
+            </button>
+
+        </form>
+
+    </main>
+
+
+    <nav class="bottom-nav">
+
+        <a href="/feed/1">
+            Лента
+        </a>
+
+        <a href="/chronicles">
+            Источники
+        </a>
+
+    </nav>
+
+</body>
+</html>

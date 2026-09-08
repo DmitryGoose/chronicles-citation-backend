@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ chronicle["название"] }}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body class="feed-page">
+
+    <main class="feed">
+
+        <article class="feed-card">
+
+            <video
+                class="feed-video"
+                src="{{ chronicle['видео'] }}"
+                autoplay
+                muted
+                loop
+                playsinline
+            >
+                Ваш браузер не поддерживает видео.
+            </video>
+
+
+            <section class="feed-overlay">
+
+                <div class="feed-description">
+
+                    <h1>
+                        {{ chronicle["название"] }}
+                    </h1>
+
+                    <h2>
+                        {{ chronicle["заголовок"] }}
+                    </h2>
+
+                    <p>
+                        {{ chronicle["описание"] }}
+                    </p>
+
+
+                    <div class="source-info">
+
+                        <div class="source-row">
+                            <span>Тип источника</span>
+                            <strong>
+                                {{ chronicle["тип_источника"] }}
+                            </strong>
+                        </div>
+
+                        <div class="source-row">
+                            <span>Год создания</span>
+                            <strong>
+                                {{ chronicle["год_создания"] }}
+                            </strong>
+                        </div>
+
+                        <div class="source-row">
+                            <span>Период описания</span>
+                            <strong>
+                                {{ chronicle["период_описания_от"] }}
+                                —
+                                {{ chronicle["период_описания_до"] }}
+                            </strong>
+                        </div>
+
+                        <div class="source-row">
+                            <span>Язык</span>
+                            <strong>
+                                {{ chronicle["язык"] }}
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feed-actions">
+
+                    <div class="like-button">
+                        ❤️
+                        <span>{{ likes_count }}</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </article>
+
+    </main>
+
+
+    <nav class="bottom-nav">
+
+        {% if previous_chronicle %}
+            <a href="/feed/{{ chronicle['id'] - 1 }}">
+                ← Предыдущий
+            </a>
+        {% endif %}
+
+        <a href="/add">
+            ＋ Добавить
+        </a>
+
+        <a href="/chronicles">
+            Источники
+        </a>
+
+        {% if next_chronicle %}
+            <a href="/feed/{{ chronicle['id'] }}?next=true">
+                Следующий →
+            </a>
+        {% endif %}
+
+    </nav>
+
+</body>
+</html>

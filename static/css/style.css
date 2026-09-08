@@ -1,0 +1,621 @@
+/* ===== Общие стили ===== */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+
+/* ===== Нижняя навигация ===== */
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+
+    background: white;
+    border-top: 1px solid #ccc;
+
+    z-index: 100;
+}
+
+.bottom-nav a {
+    text-decoration: none;
+    color: black;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 10px 14px;
+}
+
+
+/* =========================================================
+   СТРАНИЦА ИСТОЧНИКОВ
+   ========================================================= */
+
+.chronicles-page {
+    margin: 0;
+    padding: 0 0 80px 0;
+    background: #f2f2f2;
+}
+
+.chronicles-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px 25px;
+    box-sizing: border-box;
+}
+
+
+/* ===== Заголовок страницы ===== */
+
+.page-header {
+    margin-bottom: 25px;
+}
+
+.page-header h1 {
+    margin: 0 0 8px 0;
+    font-size: 34px;
+}
+
+.page-header p {
+    margin: 0;
+    color: #666;
+    font-size: 16px;
+}
+
+
+/* ===== Фильтр ===== */
+
+.filter-form {
+    display: flex;
+    align-items: end;
+    gap: 12px;
+
+    margin-bottom: 30px;
+    padding: 18px;
+
+    background: white;
+    border-radius: 14px;
+}
+
+.filter-field {
+    flex: 1;
+}
+
+.filter-field label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+.filter-field input {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    font-size: 15px;
+}
+
+.filter-form button {
+    padding: 11px 18px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #111;
+    color: white;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* ===== Сетка источников ===== */
+
+.chronicles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+
+/* ===== Карточка источника ===== */
+
+.chronicle-card {
+    overflow: hidden;
+
+    background: white;
+
+    border: none;
+    border-radius: 16px;
+
+    padding: 0;
+}
+
+.chronicle-link {
+    display: block;
+
+    color: inherit;
+    text-decoration: none;
+}
+
+.chronicle-image {
+    display: block;
+
+    width: 100%;
+    height: 250px;
+
+    object-fit: cover;
+}
+
+.chronicle-content {
+    padding: 18px;
+}
+
+.chronicle-content h2 {
+    margin: 0 0 8px 0;
+
+    font-size: 21px;
+    line-height: 1.2;
+}
+
+.chronicle-type {
+    margin: 0 0 15px 0;
+
+    color: #666;
+    font-size: 14px;
+}
+
+.chronicle-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-top: 12px;
+
+    border-top: 1px solid #eee;
+
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+/* ===== Нет результатов ===== */
+
+.empty-result {
+    padding: 30px;
+
+    background: white;
+    border-radius: 14px;
+
+    text-align: center;
+    color: #666;
+}
+
+
+/* =========================================================
+   СТРАНИЦА ДОБАВЛЕНИЯ
+   ========================================================= */
+
+.add-page {
+    margin: 0;
+    padding: 0 0 80px 0;
+
+    background: #f2f2f2;
+}
+
+.add-container {
+    max-width: 800px;
+    margin: 0 auto;
+
+    padding: 30px 25px;
+
+    box-sizing: border-box;
+}
+
+.add-form {
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 16px;
+}
+
+
+/* ===== Разделы формы ===== */
+
+.form-section {
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+
+    border-bottom: 1px solid #eee;
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.form-section h2 {
+    margin: 0 0 18px 0;
+
+    font-size: 20px;
+}
+
+
+/* ===== Поля формы ===== */
+
+.form-field {
+    margin-bottom: 18px;
+}
+
+.form-field:last-child {
+    margin-bottom: 0;
+}
+
+.form-field label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-weight: bold;
+}
+
+.form-field input,
+.form-field textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+}
+
+.form-field textarea {
+    min-height: 120px;
+
+    resize: vertical;
+}
+
+
+/* ===== Три поля в одной строке ===== */
+
+.form-row {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+
+/* ===== Кнопка ===== */
+
+.add-button {
+    width: 100%;
+
+    padding: 13px 20px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #111;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   СТРАНИЦА ЛЕНТЫ
+   ========================================================= */
+
+.feed-page {
+    margin: 0;
+    padding: 0;
+
+    background: #f2f2f2;
+
+    overflow: hidden;
+}
+
+.feed {
+    width: 100%;
+    max-width: 1200px;
+
+    height: calc(100vh - 55px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    margin: 0 auto;
+
+    box-sizing: border-box;
+}
+
+
+/* ===== Карточка источника ===== */
+
+.feed-card {
+    display: flex;
+
+    width: 100%;
+    height: 100%;
+
+    box-sizing: border-box;
+
+    background: white;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    padding: 20px;
+}
+
+
+/* ===== Видео ===== */
+
+.feed-video {
+    width: 600px;
+    height: 600px;
+
+    aspect-ratio: 9 / 16;
+
+    align-self: center;
+
+    object-fit: cover;
+
+    min-width: 0;
+    min-height: 0;
+
+    background: #000;
+
+    border-radius: 14px;
+
+    margin: 0;
+
+    flex-shrink: 0;
+}
+
+
+/* ===== Информация справа ===== */
+
+.feed-overlay {
+    position: static;
+
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 15px 30px;
+
+    box-sizing: border-box;
+
+    color: #111;
+
+    background: white;
+}
+
+.feed-description {
+    max-width: 100%;
+}
+
+.feed-description h1 {
+    margin: 0 0 12px 0;
+
+    font-size: 30px;
+    line-height: 1.15;
+}
+
+.feed-description h2 {
+    margin: 0 0 18px 0;
+
+    font-size: 21px;
+    line-height: 1.25;
+}
+
+.feed-description p {
+    margin: 9px 0;
+
+    line-height: 1.45;
+}
+
+
+/* ===== Информация об источнике ===== */
+
+.source-info {
+    margin-top: 28px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #ddd;
+}
+
+.source-row {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 9px 0;
+
+    border-bottom: 1px solid #eee;
+
+    font-size: 15px;
+}
+
+.source-row span {
+    color: #666;
+}
+
+.source-row strong {
+    text-align: right;
+}
+
+
+/* ===== Лайки ===== */
+
+.feed-actions {
+    display: flex;
+    align-items: center;
+}
+
+.like-button {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 28px;
+}
+
+.like-button span {
+    font-size: 19px;
+}
+
+
+/* ===== События ===== */
+
+.events {
+    display: none;
+}
+
+
+/* =========================================================
+   МОБИЛЬНАЯ АДАПТАЦИЯ
+   ========================================================= */
+
+@media (max-width: 750px) {
+
+    /* ===== Лента ===== */
+
+    .feed {
+        height: calc(100vh - 55px);
+
+        padding: 10px;
+    }
+
+    .feed-card {
+        flex-direction: column;
+
+        padding: 10px;
+
+        overflow-y: auto;
+    }
+
+    .feed-video {
+        width: 100%;
+        height: auto;
+
+        aspect-ratio: 16 / 9;
+
+        object-fit: cover;
+    }
+
+    .feed-overlay {
+        padding: 15px 10px;
+    }
+
+    .feed-description h1 {
+        font-size: 25px;
+    }
+
+    .feed-description h2 {
+        font-size: 19px;
+    }
+
+    .source-row {
+        flex-direction: column;
+
+        gap: 3px;
+    }
+
+    .source-row strong {
+        text-align: left;
+    }
+
+    .bottom-nav {
+        gap: 10px;
+    }
+
+    .bottom-nav a {
+        font-size: 14px;
+
+        padding: 8px;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    /* ===== Источники ===== */
+
+    .chronicles-container {
+        padding: 20px 15px;
+    }
+
+    .chronicles-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-form {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .filter-form button {
+        width: 100%;
+    }
+
+    .chronicle-image {
+        height: 220px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    /* ===== Добавление ===== */
+
+    .add-container {
+        padding: 20px 15px;
+    }
+
+    .add-form {
+        padding: 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+
+        gap: 0;
+    }
+}
