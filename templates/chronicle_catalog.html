@@ -7,7 +7,7 @@
 
     <title>Источники</title>
 
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/application_styles.css">
 </head>
 
 <body>
@@ -31,7 +31,7 @@
 
             <form
                 method="get"
-                action="/chronicles"
+                action="/chronicle-catalog"
                 class="filter-form"
             >
 
@@ -63,7 +63,7 @@
 
                         <article class="chronicle-card">
 
-                            <a href="/feed/{{ chronicle['id'] }}">
+                            <a href="/chronicle-feed/{{ chronicle['id'] }}">
 
                                 <img
                                     src="{{ chronicle['изображение'] }}"
@@ -124,15 +124,15 @@
 
     <nav class="bottom-nav">
 
-        <a href="/feed/1">
+        <a href="/chronicle-feed/1">
             Лента
         </a>
 
-        <a href="/add">
+        <a href="/add-chronicle">
             ＋ Добавить
         </a>
 
-        <a href="/chronicles">
+        <a href="/chronicle-catalog">
             Источники
         </a>
 
