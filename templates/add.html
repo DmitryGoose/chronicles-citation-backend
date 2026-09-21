@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Добавить источник</title>
+
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 
@@ -17,6 +20,42 @@
         </header>
 
         <form class="add-form">
+
+            <!-- Сначала видео и изображение -->
+
+            <div class="form-section">
+
+                <h2>Медиа</h2>
+
+                <div class="form-field">
+                    <label for="видео">
+                        Видео
+                    </label>
+
+                    <input
+                        type="text"
+                        id="видео"
+                        name="видео"
+                        placeholder="URL видео из MinIO"
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label for="изображение">
+                        Изображение
+                    </label>
+
+                    <input
+                        type="text"
+                        id="изображение"
+                        name="изображение"
+                        placeholder="URL изображения из MinIO"
+                    >
+                </div>
+
+            </div>
+
+            <!-- Основная информация -->
 
             <div class="form-section">
 
@@ -46,61 +85,6 @@
                     >
                 </div>
 
-            </div>
-
-
-            <div class="form-section">
-
-                <h2>Период и дата создания</h2>
-
-                <div class="form-row">
-
-                    <div class="form-field">
-                        <label for="год_создания">
-                            Год создания
-                        </label>
-
-                        <input
-                            type="number"
-                            id="год_создания"
-                            name="год_создания"
-                            placeholder="1116"
-                        >
-                    </div>
-
-                    <div class="form-field">
-                        <label for="период_описания_от">
-                            Описание от
-                        </label>
-
-                        <input
-                            type="number"
-                            id="период_описания_от"
-                            name="период_описания_от"
-                            placeholder="852"
-                        >
-                    </div>
-
-                    <div class="form-field">
-                        <label for="период_описания_до">
-                            Описание до
-                        </label>
-
-                        <input
-                            type="number"
-                            id="период_описания_до"
-                            name="период_описания_до"
-                            placeholder="1110"
-                        >
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="form-section">
-
                 <div class="form-field">
                     <label for="язык">
                         Язык
@@ -116,6 +100,39 @@
 
             </div>
 
+            <!-- Даты -->
+
+            <div class="form-section">
+
+                <div class="form-field">
+                    <label for="год_авторства">
+                        Год авторства
+                    </label>
+
+                    <input
+                        type="number"
+                        id="год_авторства"
+                        name="год_авторства"
+                        placeholder="1116"
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label for="год_начала">
+                        Год начала
+                    </label>
+
+                    <input
+                        type="number"
+                        id="год_начала"
+                        name="год_начала"
+                        placeholder="852"
+                    >
+                </div>
+
+            </div>
+
+            <!-- Текст -->
 
             <div class="form-section">
 
@@ -146,53 +163,20 @@
 
             </div>
 
-
-            <div class="form-section">
-
-                <h2>Медиа</h2>
-
-                <div class="form-field">
-                    <label for="изображение">
-                        Изображение
-                    </label>
-
-                    <input
-                        type="text"
-                        id="изображение"
-                        name="изображение"
-                        placeholder="URL изображения из MinIO"
-                    >
-                </div>
-
-                <div class="form-field">
-                    <label for="видео">
-                        Видео
-                    </label>
-
-                    <input
-                        type="text"
-                        id="видео"
-                        name="видео"
-                        placeholder="URL видео из MinIO"
-                    >
-                </div>
-
-            </div>
-
-
-            <button type="submit" class="add-button">
-                Добавить источник
-            </button>
-
         </form>
 
     </main>
 
+    <!-- Одинаковая нижняя панель -->
 
     <nav class="bottom-nav">
 
         <a href="/feed/1">
             Лента
+        </a>
+
+        <a href="/add">
+            ＋ Добавить
         </a>
 
         <a href="/chronicles">

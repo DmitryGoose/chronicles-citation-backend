@@ -2,7 +2,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, Request, Query
 from fastapi.templating import Jinja2Templates
 
-from data.collections import chronicles, events
+from data.collections import chronicles
 
 
 app = FastAPI()
@@ -12,13 +12,6 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 
-@app.get("/")
-def main():
-    return {
-        "chronicles_count": len(chronicles),
-        "events_count": len(events),
-    }
-
 @app.get("/add")
 def add_chronicle(request: Request):
     return templates.TemplateResponse(
@@ -26,6 +19,7 @@ def add_chronicle(request: Request):
         name="add.html",
         context={}
     )
+
 
 @app.get("/chronicles")
 def chronicles_list(
@@ -35,12 +29,12 @@ def chronicles_list(
     filtered_chronicles = chronicles
 
     if year:
-        year_number = int(year)
+        year_number = int(year[:4])
 
         filtered_chronicles = [
             chronicle
             for chronicle in chronicles
-            if chronicle["год_создания"] == year_number
+            if chronicle["год_начала"] == year_number
         ]
 
     return templates.TemplateResponse(
@@ -51,9 +45,6 @@ def chronicles_list(
             "selected_year": year,
         }
     )
-
-
-
 
 
 @app.get("/feed/{chronicle_id}")
@@ -79,16 +70,22 @@ def feed(
 
     chronicle = chronicles[current_index]
 
-    chronicle_events = [
-        event
-        for event in events
-        if event["год"] in chronicle["события"]
-    ]
-
     likes_count = len(chronicle["лайки"])
 
     previous_chronicle = current_index > 0
     next_chronicle = current_index < len(chronicles) - 1
+
+    previous_id = (
+        chronicles[current_index - 1]["id"]
+        if previous_chronicle
+        else None
+    )
+
+    next_id = (
+        chronicles[current_index + 1]["id"]
+        if next_chronicle
+        else None
+    )
 
     return templates.TemplateResponse(
         request=request,
@@ -96,8 +93,9 @@ def feed(
         context={
             "chronicle": chronicle,
             "previous_chronicle": previous_chronicle,
-            "events": chronicle_events,
-            "likes_count": likes_count,
+            "previous_id": previous_id,
             "next_chronicle": next_chronicle,
+            "next_id": next_id,
+            "likes_count": likes_count,
         }
     )

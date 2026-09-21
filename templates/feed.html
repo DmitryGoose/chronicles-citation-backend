@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{{ chronicle["название"] }}</title>
+
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 
@@ -24,23 +27,17 @@
                 Ваш браузер не поддерживает видео.
             </video>
 
-
             <section class="feed-overlay">
 
                 <div class="feed-description">
 
-                    <h1>
-                        {{ chronicle["название"] }}
-                    </h1>
+                    <h1>{{ chronicle["название"] }}</h1>
 
-                    <h2>
-                        {{ chronicle["заголовок"] }}
-                    </h2>
+                    <h2>{{ chronicle["заголовок"] }}</h2>
 
                     <p>
                         {{ chronicle["описание"] }}
                     </p>
-
 
                     <div class="source-info">
 
@@ -52,18 +49,16 @@
                         </div>
 
                         <div class="source-row">
-                            <span>Год создания</span>
+                            <span>Год авторства</span>
                             <strong>
-                                {{ chronicle["год_создания"] }}
+                                {{ chronicle["год_авторства"] }}
                             </strong>
                         </div>
 
                         <div class="source-row">
-                            <span>Период описания</span>
+                            <span>Год начала</span>
                             <strong>
-                                {{ chronicle["период_описания_от"] }}
-                                —
-                                {{ chronicle["период_описания_до"] }}
+                                {{ chronicle["год_начала"] }}
                             </strong>
                         </div>
 
@@ -76,8 +71,23 @@
 
                     </div>
 
-                </div>
+                    <div class="feed-navigation">
 
+                        {% if previous_chronicle %}
+                            <a href="/feed/{{ previous_id }}">
+                                ← Предыдущий
+                            </a>
+                        {% endif %}
+
+                        {% if next_chronicle %}
+                            <a href="/feed/{{ chronicle['id'] }}?next=true">
+                                Следующий →
+                            </a>
+                        {% endif %}
+
+                    </div>
+
+                </div>
 
                 <div class="feed-actions">
 
@@ -94,14 +104,13 @@
 
     </main>
 
+    <!-- Одинаковая нижняя панель на всех страницах -->
 
     <nav class="bottom-nav">
 
-        {% if previous_chronicle %}
-            <a href="/feed/{{ chronicle['id'] - 1 }}">
-                ← Предыдущий
-            </a>
-        {% endif %}
+        <a href="/feed/1">
+            Лента
+        </a>
 
         <a href="/add">
             ＋ Добавить
@@ -110,12 +119,6 @@
         <a href="/chronicles">
             Источники
         </a>
-
-        {% if next_chronicle %}
-            <a href="/feed/{{ chronicle['id'] }}?next=true">
-                Следующий →
-            </a>
-        {% endif %}
 
     </nav>
 
