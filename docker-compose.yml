@@ -1,0 +1,23 @@
+﻿services:
+  postgres:
+    image: postgres:16
+    container_name: chronicles-postgres
+    environment:
+      POSTGRES_DB: chronicles_db
+      POSTGRES_USER: chronicles_user
+      POSTGRES_PASSWORD: chronicles_password
+    ports:
+      - "55433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    container_name: chronicles-adminer
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:

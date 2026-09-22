@@ -19,7 +19,7 @@
             <p>Заполните сведения о летописном источнике</p>
         </header>
 
-        <form class="add-form">
+        <form class="add-form" method="post" action="/add-chronicle">
 
             <!-- Сначала видео и изображение -->
 
@@ -35,7 +35,7 @@
                     <input
                         type="text"
                         id="видео"
-                        name="видео"
+                        name="url_видео"
                         placeholder="URL видео из MinIO"
                     >
                 </div>
@@ -161,6 +161,10 @@
                     ></textarea>
                 </div>
 
+            </div>
+
+            <div class="form-section">
+                <button type="submit">Добавить источник</button>
             </div>
 
         </form>

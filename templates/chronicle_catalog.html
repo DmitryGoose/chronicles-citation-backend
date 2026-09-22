@@ -63,40 +63,35 @@
 
                         <article class="chronicle-card">
 
-                            <a href="/chronicle-feed/{{ chronicle['id'] }}">
+                            <a href="/chronicle-feed/{{ chronicle.id }}">
 
                                 <img
-                                    src="{{ chronicle['изображение'] }}"
-                                    alt="{{ chronicle['название'] }}"
+                                    src="{{ chronicle.url_изображения or '/static/images/default.jpg' }}"
+                                    alt="{{ chronicle.название }}"
                                 >
 
                             </a>
 
-
                             <h2>
-                                {{ chronicle['название'] }}
+                                {{ chronicle.название }}
                             </h2>
 
-
                             <p>
-                                {{ chronicle['тип_источника'] }}
+                                {{ chronicle.заголовок or 'Исторический источник' }}
                             </p>
-
 
                             <p>
                                 Год авторства:
-                                {{ chronicle['год_авторства'] }}
+                                {{ chronicle.год_авторства }}
                             </p>
-
 
                             <p>
                                 Год начала:
-                                {{ chronicle['год_начала'] }}
+                                {{ chronicle.год_начала }}
                             </p>
 
-
                             <p>
-                                ❤️ {{ chronicle['лайки'] | length }}
+                                ❤️ {{ chronicle.likes_count }}
                             </p>
 
                         </article>
