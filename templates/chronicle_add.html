@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавление летописи</title>
+    <link rel="stylesheet" href="/static/css/application_styles.css">
+</head>
+<body>
+    <main class="mobile-page content-page">
+        <header class="page-header">
+            <h1>Добавление летописи</h1>
+            {% if draft %}
+            <p>Заполните краткую информацию и опубликуйте черновик</p>
+            {% else %}
+            <p>Укажите название и выберите медиафайлы</p>
+            {% endif %}
+        </header>
+
+        {% if draft %}
+        <section class="draft-preview panel">
+            <object class="draft-image" data="{{ draft.image_url }}" type="image/jpeg" aria-label="{{ draft.name }}">
+                <img src="{{ default_image_url }}" alt="Изображение по умолчанию">
+            </object>
+            <h2>{{ draft.name }}</h2>
+        </section>
+
+        <form class="panel add-form" method="post" action="/chronicles/{{ draft.id }}/publish">
+            <div class="form-section">
+                <h2>Краткая информация</h2>
+                <label for="short_description">Описание</label>
+                <textarea id="short_description" name="short_description" required>{{ draft.short_description or '' }}</textarea>
+            </div>
+            <div class="form-section">
+                <h2>Поля летописи</h2>
+                <label for="authorship_year">Год авторства</label>
+                <input type="number" id="authorship_year" name="authorship_year" min="1" max="2100" value="{{ draft.authorship_year or '' }}" required>
+                <label for="start_year">Год начала</label>
+                <input type="number" id="start_year" name="start_year" min="1" max="2100" value="{{ draft.start_year or '' }}" required>
+            </div>
+            <button class="action-button" type="submit">Опубликовать</button>
+        </form>
+        {% else %}
+        <form class="panel add-form" method="post" action="/chronicles">
+            <img class="draft-image" src="{{ default_image_url }}" alt="Изображение летописи по умолчанию">
+            <div class="form-section">
+                <h2>Медиа</h2>
+                <label for="image_file">Изображение</label>
+                <input type="file" id="image_file" accept="image/*">
+                <label for="video_file">Видео</label>
+                <input type="file" id="video_file" accept="video/mp4">
+                <p class="form-note">В ЛР‑2 выбранные файлы не передаются на сервер. Для нового черновика используются локальные медиа по умолчанию.</p>
+            </div>
+            <div class="form-section">
+                <h2>Название</h2>
+                <label for="name">Название летописи</label>
+                <input type="text" id="name" name="name" maxlength="255" required>
+            </div>
+            <button class="action-button" type="submit">Далее</button>
+        </form>
+        {% endif %}
+    </main>
+
+    <nav class="bottom-nav" aria-label="Основная навигация">
+        <a href="/chronicles/feed">Лента</a>
+        <a class="active" href="/chronicles/add">Добавление</a>
+        <a href="/chronicles/catalog">Плитка</a>
+    </nav>
+</body>
+</html>

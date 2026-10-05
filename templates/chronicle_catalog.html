@@ -1,137 +1,61 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Источники</title>
-
+    <title>Плитка летописей</title>
     <link rel="stylesheet" href="/static/css/application_styles.css">
 </head>
-
 <body>
+    <main class="mobile-page content-page">
+        <header class="page-header">
+            <h1>Летописные источники</h1>
+            <p>Семь памятников древнерусского летописания</p>
+        </header>
 
-    <main class="chronicles-page">
-
-        <div class="chronicles-container">
-
-            <header class="page-header">
-
-                <h1>Источники</h1>
-
-                <p>
-                    Исторические летописные памятники
-                </p>
-
-            </header>
-
-
-            <!-- Фильтр -->
-
-            <form
-                method="get"
-                action="/chronicle-catalog"
-                class="filter-form"
+        <form method="get" action="/chronicles/catalog" class="panel filter-form">
+            <label for="start_year">Год начала летописи</label>
+            <input
+                type="number"
+                id="start_year"
+                name="start_year"
+                min="1"
+                max="2100"
+                value="{{ selected_start_year if selected_start_year is not none else '' }}"
+                placeholder="Например, 852"
             >
+            <button class="action-button" type="submit">Найти</button>
+        </form>
 
-                <label for="year">
-                    Год начала
-                </label>
-
-                <input
-                    type="month"
-                    id="year"
-                    name="year"
-                    value="{{ selected_year or '' }}"
-                >
-
-                <button type="submit">
-                    Фильтровать
-                </button>
-
-            </form>
-
-
-            <!-- Карточки источников -->
-
-            {% if chronicles %}
-
-                <section class="chronicles-grid">
-
-                    {% for chronicle in chronicles %}
-
-                        <article class="chronicle-card">
-
-                            <a href="/chronicle-feed/{{ chronicle.id }}">
-
-                                <img
-                                    src="{{ chronicle.url_изображения or '/static/images/default.jpg' }}"
-                                    alt="{{ chronicle.название }}"
-                                >
-
-                            </a>
-
-                            <h2>
-                                {{ chronicle.название }}
-                            </h2>
-
-                            <p>
-                                {{ chronicle.заголовок or 'Исторический источник' }}
-                            </p>
-
-                            <p>
-                                Год авторства:
-                                {{ chronicle.год_авторства }}
-                            </p>
-
-                            <p>
-                                Год начала:
-                                {{ chronicle.год_начала }}
-                            </p>
-
-                            <p>
-                                ❤️ {{ chronicle.likes_count }}
-                            </p>
-
-                        </article>
-
-                    {% endfor %}
-
-                </section>
-
-            {% else %}
-
-                <div class="empty-result">
-
-                    Источники за выбранный год не найдены.
-
-                </div>
-
-            {% endif %}
-
-        </div>
-
+        {% if chronicles %}
+        <section class="chronicles-grid" aria-label="Список летописей">
+            {% for record in chronicles %}
+            {% set chronicle = record.item %}
+            <article class="chronicle-card">
+                <a class="card-link" href="/chronicles/feed?chronicle_id={{ chronicle.id }}">
+                    <object class="card-image" data="{{ chronicle.image_url }}" type="image/jpeg" aria-label="{{ chronicle.name }}">
+                        <img src="{{ default_image_url }}" alt="{{ chronicle.name }}">
+                    </object>
+                    <div class="card-body">
+                        <h2>{{ chronicle.name }}</h2>
+                        <p>♥ {{ record.likes_count }}</p>
+                    </div>
+                </a>
+                <form method="post" action="/chronicles/{{ chronicle.id }}/delete">
+                    <button class="action-button card-action" type="submit">Удалить</button>
+                </form>
+            </article>
+            {% endfor %}
+        </section>
+        {% else %}
+        <p class="panel empty-result">Летописи с указанным годом начала не найдены.</p>
+        {% endif %}
     </main>
 
-
-    <!-- Нижняя навигация -->
-
-    <nav class="bottom-nav">
-
-        <a href="/chronicle-feed/1">
-            Лента
-        </a>
-
-        <a href="/add-chronicle">
-            ＋ Добавить
-        </a>
-
-        <a href="/chronicle-catalog">
-            Источники
-        </a>
-
+    <nav class="bottom-nav" aria-label="Основная навигация">
+        <a href="/chronicles/feed">Лента</a>
+        <a href="/chronicles/add">Добавление</a>
+        <a class="active" href="/chronicles/catalog">Плитка</a>
     </nav>
-
 </body>
 </html>
