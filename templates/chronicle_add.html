@@ -33,10 +33,10 @@
             </div>
             <div class="form-section">
                 <h2>Поля летописи</h2>
-                <label for="authorship_year">Год авторства</label>
-                <input type="number" id="authorship_year" name="authorship_year" min="1" max="2100" value="{{ draft.authorship_year or '' }}" required>
-                <label for="start_year">Год начала</label>
-                <input type="number" id="start_year" name="start_year" min="1" max="2100" value="{{ draft.start_year or '' }}" required>
+                <label for="authorship_year">Дата авторства</label>
+                <input type="date" id="authorship_year" name="authorship_year" min="0001-01-01" max="2100-12-31" value="{% if draft.authorship_year %}{{ '%04d'|format(draft.authorship_year) }}-01-01{% endif %}" required>
+                <label for="start_year">Дата начала</label>
+                <input type="date" id="start_year" name="start_year" min="0001-01-01" max="2100-12-31" value="{% if draft.start_year %}{{ '%04d'|format(draft.start_year) }}-01-01{% endif %}" required>
             </div>
             <button class="action-button" type="submit">Опубликовать</button>
         </form>

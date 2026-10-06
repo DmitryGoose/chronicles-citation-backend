@@ -14,15 +14,14 @@
         </header>
 
         <form method="get" action="/chronicles/catalog" class="panel filter-form">
-            <label for="start_year">Год начала летописи</label>
+            <label for="start_year">Дата начала летописи</label>
             <input
-                type="number"
+                type="date"
                 id="start_year"
                 name="start_year"
-                min="1"
-                max="2100"
-                value="{{ selected_start_year if selected_start_year is not none else '' }}"
-                placeholder="Например, 852"
+                min="0001-01-01"
+                max="2100-12-31"
+                value="{{ selected_start_date }}"
             >
             <button class="action-button" type="submit">Найти</button>
         </form>

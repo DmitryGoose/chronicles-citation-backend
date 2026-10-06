@@ -4,7 +4,8 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(100) NOT NULL UNIQUE
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE chronicles (
@@ -32,8 +33,13 @@ CREATE TABLE likes (
     CONSTRAINT one_like_per_user UNIQUE (user_id, chronicle_id)
 );
 
-INSERT INTO users (username) VALUES
-    ('dmitry'), ('anna'), ('maria'), ('ivan'), ('sergey'), ('olga');
+INSERT INTO users (username, password_hash) VALUES
+    ('dmitry', 'demo_hash_dmitry'),
+    ('anna', 'demo_hash_anna'),
+    ('maria', 'demo_hash_maria'),
+    ('ivan', 'demo_hash_ivan'),
+    ('sergey', 'demo_hash_sergey'),
+    ('olga', 'demo_hash_olga');
 
 INSERT INTO chronicles
     (name, short_description, status, image_url, video_url, authorship_year, start_year, created_at, creator_id, published_at)

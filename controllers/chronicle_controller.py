@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 
 import psycopg2
@@ -21,6 +21,17 @@ DEFAULT_IMAGE_URL = "/media/chronicle_default.jpg"
 DEFAULT_VIDEO_URL = "/media/chronicle_default.mp4"
 INVALID_IMAGE_URL = "http://localhost:9000/chronicles/pending-image.jpg"
 INVALID_VIDEO_URL = "http://localhost:9000/chronicles/pending-video.mp4"
+
+
+def _year_from_calendar(value: str, field_name: str) -> int:
+    """Read a year from an HTML date picker while keeping year fields in the DB."""
+    try:
+        selected_year = date.fromisoformat(value).year
+    except ValueError as error:
+        raise HTTPException(status_code=422, detail=f"Некорректная дата: {field_name}") from error
+    if not 1 <= selected_year <= 2100:
+        raise HTTPException(status_code=422, detail=f"Год вне допустимого диапазона: {field_name}")
+    return selected_year
 
 
 def _published_query(db: Session):
@@ -101,7 +112,7 @@ def get_chronicle_draft(request: Request):
 @router.get("/catalog")
 def get_chronicle_catalog(
     request: Request,
-    start_year: int | None = Query(None, ge=1, le=2100),
+    start_year: str | None = Query(None),
 ):
     db: Session = SessionLocal()
     try:
@@ -121,8 +132,9 @@ def get_chronicle_catalog(
             .outerjoin(likes_subquery, Chronicle.id == likes_subquery.c.chronicle_id)
             .filter(Chronicle.status == "опубликован")
         )
-        if start_year is not None:
-            query = query.filter(Chronicle.start_year == start_year)
+        selected_year = _year_from_calendar(start_year, "дата начала") if start_year else None
+        if selected_year is not None:
+            query = query.filter(Chronicle.start_year == selected_year)
 
         chronicles = [
             {"item": chronicle, "likes_count": likes_count}
@@ -133,7 +145,7 @@ def get_chronicle_catalog(
             name="chronicle_catalog.html",
             context={
                 "chronicles": chronicles,
-                "selected_start_year": start_year,
+                "selected_start_date": f"{selected_year:04d}-01-01" if selected_year else "",
                 "default_image_url": DEFAULT_IMAGE_URL,
             },
         )
@@ -176,8 +188,8 @@ def create_chronicle_draft(name: str = Form(..., min_length=1, max_length=255)):
 def publish_chronicle(
     chronicle_id: int,
     short_description: str = Form(..., min_length=1),
-    authorship_year: int = Form(..., ge=1, le=2100),
-    start_year: int = Form(..., ge=1, le=2100),
+    authorship_year: str = Form(...),
+    start_year: str = Form(...),
 ):
     db: Session = SessionLocal()
     try:
@@ -194,8 +206,8 @@ def publish_chronicle(
             raise HTTPException(status_code=404, detail="Черновик не найден")
 
         chronicle.short_description = short_description.strip()
-        chronicle.authorship_year = authorship_year
-        chronicle.start_year = start_year
+        chronicle.authorship_year = _year_from_calendar(authorship_year, "дата авторства")
+        chronicle.start_year = _year_from_calendar(start_year, "дата начала")
         chronicle.status = "опубликован"
         chronicle.published_at = datetime.now()
         db.commit()
