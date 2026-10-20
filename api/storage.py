@@ -1,3 +1,4 @@
+import json
 import os
 import re
 import uuid
@@ -33,6 +34,19 @@ async def upload_media(file: UploadFile, allowed: dict[str, str]) -> str:
     if not data: raise HTTPException(status_code=422, detail="Медиафайл пуст")
     name = _latin_filename(file.filename, suffix)
     client = get_minio_client()
-    if not client.bucket_exists(MINIO_BUCKET): client.make_bucket(MINIO_BUCKET)
+    if not client.bucket_exists(MINIO_BUCKET):
+        client.make_bucket(MINIO_BUCKET)
+        client.set_bucket_policy(
+            MINIO_BUCKET,
+            json.dumps({
+                "Version": "2012-10-17",
+                "Statement": [{
+                    "Effect": "Allow",
+                    "Principal": {"AWS": ["*"]},
+                    "Action": ["s3:GetObject"],
+                    "Resource": [f"arn:aws:s3:::{MINIO_BUCKET}/*"],
+                }],
+            }),
+        )
     client.put_object(MINIO_BUCKET, name, BytesIO(data), len(data), content_type=file.content_type)
     return name

@@ -33,17 +33,17 @@ services:
     volumes:
       - minio_data:/data
 
-  minio-init:
-    image: minio/mc:latest
-    depends_on:
-      - minio
-    entrypoint: >
-      /bin/sh -c "
-      until mc alias set local http://minio:9000 minioadmin minioadmin; do sleep 1; done;
-      mc mb --ignore-existing local/chronicles;
-      mc anonymous set download local/chronicles;
-      "
+  redis:
+    image: redis:7-alpine
+    container_name: chronicles-redis
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
 
 volumes:
   postgres_data:
   minio_data:
+  redis_data:

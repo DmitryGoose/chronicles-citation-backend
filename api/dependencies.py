@@ -1,8 +1,29 @@
-from functools import lru_cache
+from fastapi import HTTPException, Security, status
+from fastapi.security import APIKeyCookie
 
-CURRENT_USER_ID = 1
+from api.session import SESSION_COOKIE_NAME, get_session_user_id
 
-@lru_cache(maxsize=1)
-def get_current_user_id() -> int:
-    """Return the fixed creator used before authorization in lab 4."""
-    return CURRENT_USER_ID
+session_cookie = APIKeyCookie(
+    name=SESSION_COOKIE_NAME,
+    scheme_name="CookieSession",
+    description="Cookie с идентификатором сессии, которую устанавливает POST /api/users/authenticate.",
+    auto_error=False,
+)
+
+
+def get_current_user_id(
+    session_id: str | None = Security(session_cookie),
+) -> int:
+    if not session_id:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Требуется аутентификация",
+        )
+
+    user_id = get_session_user_id(session_id)
+    if user_id is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Сессия отсутствует или истекла",
+        )
+    return user_id

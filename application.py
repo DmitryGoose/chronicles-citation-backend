@@ -5,11 +5,20 @@ from fastapi.staticfiles import StaticFiles
 
 from api.chronicles import router as api_chronicle_router
 from api.users import router as api_user_router
-
 from controllers.chronicle_controller import router as chronicle_router
 
 BASE_DIR = Path(__file__).resolve().parent
-app = FastAPI(title="Летописные источники")
+
+app = FastAPI(
+    title="Летописные источники",
+    version="4.0.0",
+    description=(
+        "REST API системы цитирования летописных источников. "
+        "GET списка и ленты доступны гостям. Методы создателя требуют "
+        "cookie-сессию, которую устанавливает метод аутентификации."
+    ),
+    contact={"name": "Дмитрий"},
+)
 
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 app.mount("/media", StaticFiles(directory=BASE_DIR / "media"), name="media")

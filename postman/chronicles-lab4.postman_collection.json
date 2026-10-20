@@ -1,0 +1,99 @@
+{
+  "info": {
+    "name": "ЛР4 — Cookie-сессии и Swagger",
+    "description": "Проверка публичных и защищённых методов веб-сервиса ЛР4.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "username",
+      "value": "lab4_user"
+    },
+    {
+      "key": "password",
+      "value": "password123"
+    },
+    {
+      "key": "draft_id",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 POST регистрация",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}"
+        },
+        "url": "{{base_url}}/api/users/register"
+      }
+    },
+    {
+      "name": "02 POST аутентификация и cookie",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}"
+        },
+        "url": "{{base_url}}/api/users/authenticate"
+      }
+    },
+    {
+      "name": "03 GET список без cookie",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/chronicles"
+      }
+    },
+    {
+      "name": "04 GET список с фильтром",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/chronicles?start_year=1016"
+      }
+    },
+    {
+      "name": "05 PUT публикация с cookie",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"short_description\": \"Источник опубликован авторизованным пользователем\",\n  \"authorship_year\": 1500,\n  \"start_year\": 1499\n}"
+        },
+        "url": "{{base_url}}/api/chronicles/{{draft_id}}/publish"
+      }
+    },
+    {
+      "name": "06 POST выход",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/users/logout"
+      }
+    }
+  ]
+}

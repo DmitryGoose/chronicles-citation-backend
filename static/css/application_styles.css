@@ -66,6 +66,12 @@ button, input, textarea { font: inherit; }
     color: var(--accent);
 }
 
+.action-link {
+    display: block;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
 label { display: block; margin: 0 0 7px; color: var(--accent); font-weight: 700; }
 
 input, textarea {
@@ -76,6 +82,29 @@ input, textarea {
     border-radius: 12px;
     background: var(--surface);
     color: var(--ink);
+}
+
+input[type="file"] {
+    padding: 7px;
+}
+
+input[type="file"]::file-selector-button,
+input[type="file"]::-webkit-file-upload-button {
+    margin-right: 10px;
+    padding: 8px 12px;
+    border: 2px solid var(--accent);
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--surface);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color .2s, color .2s;
+}
+
+input[type="file"]::file-selector-button:hover,
+input[type="file"]::-webkit-file-upload-button:hover {
+    background: var(--surface);
+    color: var(--accent);
 }
 
 input:focus, textarea:focus { outline: 3px solid var(--ink); }
@@ -91,18 +120,24 @@ textarea { min-height: 120px; resize: vertical; }
 }
 
 .chronicle-card {
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     border: 2px solid var(--accent);
     border-radius: 18px;
     background: var(--surface);
 }
 
-.card-link { display: block; }
+.card-link { display: flex; flex: 1; flex-direction: column; }
 .card-image, .card-image img { display: block; width: 100%; height: 145px; object-fit: cover; }
-.card-body { padding: 11px; }
+.card-body { flex: 1; padding: 11px; }
 .card-body h2 { margin: 0 0 10px; color: var(--accent); font-size: 15px; line-height: 1.25; }
 .card-body p { margin: 0; font-weight: 700; }
-.card-action { border-radius: 0; border-right: 0; border-bottom: 0; border-left: 0; }
+.card-action {
+    width: calc(100% - 20px);
+    margin: 0 10px 10px;
+    border-radius: 999px;
+}
 .empty-result { text-align: center; }
 
 .add-form h2, .draft-preview h2 { margin: 0 0 14px; color: var(--accent); font-size: 19px; }
@@ -141,6 +176,17 @@ textarea { min-height: 120px; resize: vertical; }
 .topic-field strong { font-size: 16px; }
 .like-icon span, .icon-action span:first-child { color: var(--accent); font-size: 32px; text-shadow: 0 0 2px var(--surface); }
 .icon-action:hover span:last-child, .icon-action:focus-visible span:last-child { text-decoration: underline; }
+
+.next-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 6px;
+    font-size: 10px;
+    line-height: 1.1;
+}
+
 
 .bottom-nav {
     position: fixed;
