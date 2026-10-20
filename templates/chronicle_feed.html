@@ -1,126 +1,54 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>{{ chronicle["название"] }}</title>
-
+    <title>{{ chronicle.name }} — Лента</title>
     <link rel="stylesheet" href="/static/css/application_styles.css">
 </head>
-
 <body class="feed-page">
-
-    <main class="feed">
-
+    <main class="mobile-page feed">
         <article class="feed-card">
-
-            <video
-                class="feed-video"
-                src="{{ chronicle['видео'] }}"
-                autoplay
-                muted
-                loop
-                playsinline
-            >
-                Ваш браузер не поддерживает видео.
+            <video class="feed-media" autoplay muted loop playsinline poster="{{ default_image_url }}">
+                {% if chronicle.video_url %}<source src="{{ chronicle.video_url }}" type="video/mp4">{% endif %}
+                <source src="{{ default_video_url }}" type="video/mp4">
             </video>
 
-            <section class="feed-overlay">
+            <div class="feed-overlay">
+                <section class="feed-copy">
+                    <h1>{{ chronicle.name }}</h1>
+                    <p class="description-preview">{{ chronicle.short_description }}</p>
+                    <details>
+                        <summary>Больше / меньше</summary>
+                        <p>{{ chronicle.short_description }}</p>
+                    </details>
+                </section>
 
-                <div class="feed-description">
-
-                    <h1>{{ chronicle["название"] }}</h1>
-
-                    <h2>{{ chronicle["заголовок"] }}</h2>
-
-                    <p>
-                        {{ chronicle["описание"] }}
-                    </p>
-
-                    <div class="source-info">
-
-                        <div class="source-row">
-                            <span>Тип источника</span>
-                            <strong>
-                                {{ chronicle["тип_источника"] }}
-                            </strong>
-                        </div>
-
-                        <div class="source-row">
-                            <span>Год авторства</span>
-                            <strong>
-                                {{ chronicle["год_авторства"] }}
-                            </strong>
-                        </div>
-
-                        <div class="source-row">
-                            <span>Год начала</span>
-                            <strong>
-                                {{ chronicle["год_начала"] }}
-                            </strong>
-                        </div>
-
-                        <div class="source-row">
-                            <span>Язык</span>
-                            <strong>
-                                {{ chronicle["язык"] }}
-                            </strong>
-                        </div>
-
+                <aside class="feed-actions" aria-label="Информация о летописи">
+                    <div class="topic-field">
+                        <span>Год авторства</span>
+                        <strong>{{ chronicle.authorship_year }}</strong>
                     </div>
-
-                    <div class="feed-navigation">
-
-                        {% if previous_chronicle %}
-                            <a href="/chronicle-feed/{{ previous_id }}">
-                                ← Предыдущий
-                            </a>
-                        {% endif %}
-
-                        {% if next_chronicle %}
-                            <a href="/chronicle-feed/{{ chronicle['id'] }}?next=true">
-                                Следующий →
-                            </a>
-                        {% endif %}
-
+                    <div class="topic-field">
+                        <span>Год начала</span>
+                        <strong>{{ chronicle.start_year }}</strong>
                     </div>
-
-                </div>
-
-                <div class="feed-actions">
-
-                    <div class="like-button">
-                        ❤️
-                        <span>{{ likes_count }}</span>
+                    <div class="like-icon" aria-label="Количество отметок нравится">
+                        <span aria-hidden="true">♥</span>
+                        <strong>{{ likes_count }}</strong>
                     </div>
-
-                </div>
-
-            </section>
-
+                    <a class="action-button next-button" href="/chronicles/feed?chronicle_id={{ chronicle.id }}&next=true">
+                        <span>Следующий</span>
+                    </a>
+                </aside>
+            </div>
         </article>
-
     </main>
 
-    <!-- Одинаковая нижняя панель на всех страницах -->
-
-    <nav class="bottom-nav">
-
-        <a href="/chronicle-feed/1">
-            Лента
-        </a>
-
-        <a href="/add-chronicle">
-            ＋ Добавить
-        </a>
-
-        <a href="/chronicle-catalog">
-            Источники
-        </a>
-
+    <nav class="bottom-nav" aria-label="Основная навигация">
+        <a class="active" href="/chronicles/feed">Лента</a>
+        <a href="/chronicles/add">Добавление</a>
+        <a href="/chronicles/catalog">Плитка</a>
     </nav>
-
 </body>
 </html>

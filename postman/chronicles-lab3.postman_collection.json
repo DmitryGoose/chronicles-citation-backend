@@ -1,0 +1,24 @@
+{
+  "info": {
+    "name": "ЛР3 — Летописные источники",
+    "description": "Десять запросов в порядке показа лабораторной работы 3.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "base_url", "value": "http://127.0.0.1:8000"},
+    {"key": "draft_id", "value": ""},
+    {"key": "published_id", "value": "1"}
+  ],
+  "item": [
+    {"name": "01 GET список с фильтром", "request": {"method": "GET", "url": "{{base_url}}/api/chronicles?start_year=1016"}},
+    {"name": "02 POST добавить источник с файлами", "event": [{"listen": "test", "script": {"exec": ["pm.collectionVariables.set('draft_id', pm.response.json().id);"]}}], "request": {"method": "POST", "body": {"mode": "formdata", "formdata": [{"key":"name","value":"Летопись из Postman","type":"text"},{"key":"image","type":"file","src":"C:/Users/Dmitry/Desktop/web-lab1/media/chronicle_default.jpg"},{"key":"video","type":"file","src":"C:/Users/Dmitry/Desktop/web-lab1/media/chronicle_default.mp4"}]}, "url": "{{base_url}}/api/chronicles"}},
+    {"name": "03 GET поля черновика", "request": {"method": "GET", "url": "{{base_url}}/api/chronicles/draft"}},
+    {"name": "04 PUT опубликовать источник", "event": [{"listen": "test", "script": {"exec": ["pm.collectionVariables.set('published_id', pm.response.json().id);"]}}], "request": {"method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"short_description\": \"Источник, опубликованный через REST API\",\n  \"authorship_year\": 1500,\n  \"start_year\": 1499\n}"}, "url": "{{base_url}}/api/chronicles/{{draft_id}}/publish"}},
+    {"name": "05 GET лента без id", "request": {"method": "GET", "url": "{{base_url}}/api/chronicles/feed"}},
+    {"name": "06 GET следующая запись ленты", "request": {"method": "GET", "url": "{{base_url}}/api/chronicles/feed?chronicle_id={{published_id}}&next=true"}},
+    {"name": "07 POST поставить лайк", "request": {"method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\"value\": 1}"}, "url": "{{base_url}}/api/chronicles/{{published_id}}/like"}},
+    {"name": "08 DELETE источник", "request": {"method": "DELETE", "url": "{{base_url}}/api/chronicles/{{published_id}}"}},
+    {"name": "09 POST заглушка аутентификации", "request": {"method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\"username\": \"postman_lab3_user\"}"}, "url": "{{base_url}}/api/users/authenticate"}},
+    {"name": "10 POST регистрация пользователя", "request": {"method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\"username\": \"postman_lab3_user\", \"password\": \"strong-password-123\"}"}, "url": "{{base_url}}/api/users/register"}}
+  ]
+}

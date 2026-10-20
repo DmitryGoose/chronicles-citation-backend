@@ -1,0 +1,41 @@
+classDiagram
+direction LR
+
+class ChronicleDomain {
+  <<interface /api/chronicles>>
+  GET list(start_year)
+  POST create(name,image,video)
+  GET draft()
+  PUT publish(id,payload)
+  GET feed(chronicle_id,next)
+  POST like(id,value)
+  DELETE remove(id)
+}
+class UserDomain {
+  <<interface /api/users>>
+  POST register(payload)
+  POST authenticate(payload)
+  POST logout()
+}
+class Chronicle { id; name; status; image_url; video_url; creator_id }
+class User { id; username }
+class Like { id; user_id; chronicle_id }
+class chronicles { <<table>> }
+class users { <<table>> }
+class likes { <<table>> }
+class CatalogPage { <<frontend /catalog>> }
+class FeedPage { <<frontend /feed>> }
+class DraftPage { <<frontend /add>> }
+class RegistrationPage { <<frontend /registration>> }
+
+ChronicleDomain --> Chronicle
+ChronicleDomain --> Like
+ChronicleDomain --> User : current user singleton
+UserDomain --> User
+Chronicle --> chronicles : ORM
+User --> users : ORM
+Like --> likes : ORM
+CatalogPage --> ChronicleDomain : list, remove
+FeedPage --> ChronicleDomain : feed, like
+DraftPage --> ChronicleDomain : create, draft, publish
+RegistrationPage --> UserDomain : register, authenticate, logout

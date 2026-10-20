@@ -1,598 +1,218 @@
-/* =========================================================
-   ОБЩИЕ СТИЛИ
-   ========================================================= */
+/*
+   Референс: мобильная лента Pinterest.
+   Три цвета темы:
+   бордовый #800020, теплый светлый #F4EFEA, графитовый #231F20.
+   Скопированы идеи: скругленные карточки, двухколоночная плитка,
+   фиксированная нижняя навигация и затемнение поверх вертикального видео.
+*/
 
-* {
-    box-sizing: border-box;
+:root {
+    --accent: #800020;
+    --surface: #F4EFEA;
+    --ink: #231F20;
 }
 
-html {
-    background: #000;
-}
+* { box-sizing: border-box; }
+
+html { background: var(--ink); }
 
 body {
     margin: 0;
+    background: var(--ink);
+    color: var(--ink);
     font-family: Arial, sans-serif;
-
-    background: #000;
-    color: #111;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
+a { color: inherit; text-decoration: none; }
+button, input, textarea { font: inherit; }
+
+.mobile-page {
+    width: min(100%, 390px);
+    min-height: calc(100vh - 64px);
+    margin: 0 auto;
+    background: var(--surface);
 }
 
+.content-page { padding: 24px 16px 88px; }
 
-/* =========================================================
-   НИЖНЯЯ НАВИГАЦИЯ
-   ========================================================= */
+.page-header { margin-bottom: 18px; }
+.page-header h1 { margin: 0 0 7px; color: var(--accent); font-size: 27px; }
+.page-header p { margin: 0; line-height: 1.4; }
+
+.panel {
+    margin-bottom: 18px;
+    padding: 16px;
+    border: 2px solid var(--accent);
+    border-radius: 18px;
+    background: var(--surface);
+}
+
+.action-button {
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 14px;
+    border: 2px solid var(--accent);
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--surface);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color .2s, color .2s;
+}
+
+.action-button:hover,
+.action-button:focus-visible {
+    background: var(--surface);
+    color: var(--accent);
+}
+
+.action-link {
+    display: block;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+label { display: block; margin: 0 0 7px; color: var(--accent); font-weight: 700; }
+
+input, textarea {
+    width: 100%;
+    margin-bottom: 14px;
+    padding: 11px 12px;
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--ink);
+}
+
+input[type="file"] {
+    padding: 7px;
+}
+
+input[type="file"]::file-selector-button,
+input[type="file"]::-webkit-file-upload-button {
+    margin-right: 10px;
+    padding: 8px 12px;
+    border: 2px solid var(--accent);
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--surface);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color .2s, color .2s;
+}
+
+input[type="file"]::file-selector-button:hover,
+input[type="file"]::-webkit-file-upload-button:hover {
+    background: var(--surface);
+    color: var(--accent);
+}
+
+input:focus, textarea:focus { outline: 3px solid var(--ink); }
+textarea { min-height: 120px; resize: vertical; }
+
+.filter-form { display: grid; gap: 2px; }
+.filter-form input { margin-bottom: 8px; }
+
+.chronicles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.chronicle-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 2px solid var(--accent);
+    border-radius: 18px;
+    background: var(--surface);
+}
+
+.card-link { display: flex; flex: 1; flex-direction: column; }
+.card-image, .card-image img { display: block; width: 100%; height: 145px; object-fit: cover; }
+.card-body { flex: 1; padding: 11px; }
+.card-body h2 { margin: 0 0 10px; color: var(--accent); font-size: 15px; line-height: 1.25; }
+.card-body p { margin: 0; font-weight: 700; }
+.card-action {
+    width: calc(100% - 20px);
+    margin: 0 10px 10px;
+    border-radius: 999px;
+}
+.empty-result { text-align: center; }
+
+.add-form h2, .draft-preview h2 { margin: 0 0 14px; color: var(--accent); font-size: 19px; }
+.form-section { margin-bottom: 20px; padding-bottom: 6px; border-bottom: 2px solid var(--accent); }
+.form-note { margin: 0 0 14px; font-size: 12px; line-height: 1.4; }
+.draft-image, .draft-image img { width: 100%; height: 210px; object-fit: cover; border-radius: 12px; }
+.draft-preview h2 { margin-top: 12px; margin-bottom: 0; }
+
+.feed-page { overflow: hidden; }
+.feed { height: calc(100vh - 64px); background: var(--ink); }
+.feed-card { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.feed-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: var(--ink); }
+
+.feed-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 88px;
+    align-items: end;
+    gap: 12px;
+    padding: 24px 14px 18px;
+    color: var(--surface);
+    background: linear-gradient(to bottom, transparent 20%, rgba(35,31,32,.18) 45%, rgba(35,31,32,.95) 100%);
+}
+
+.feed-copy h1 { margin: 0 0 8px; font-size: 22px; }
+.feed-copy p { margin: 0; font-size: 13px; line-height: 1.35; }
+.description-preview { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+.feed-copy details { margin-top: 8px; }
+.feed-copy summary { color: var(--surface); cursor: pointer; font-size: 12px; font-weight: 700; }
+.feed-copy details p { margin-top: 7px; }
+
+.feed-actions { display: grid; gap: 14px; text-align: center; }
+.topic-field, .like-icon, .icon-action { display: grid; justify-items: center; gap: 4px; }
+.topic-field span, .icon-action span:last-child { font-size: 10px; line-height: 1.1; }
+.topic-field strong { font-size: 16px; }
+.like-icon span, .icon-action span:first-child { color: var(--accent); font-size: 32px; text-shadow: 0 0 2px var(--surface); }
+.icon-action:hover span:last-child, .icon-action:focus-visible span:last-child { text-decoration: underline; }
+
+.next-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 6px;
+    font-size: 10px;
+    line-height: 1.1;
+}
+
 
 .bottom-nav {
     position: fixed;
     bottom: 0;
     left: 50%;
-    transform: translateX(-50%);
-
-    width: 390px;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: min(100%, 390px);
     height: 64px;
-
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
-    flex-shrink: 0;
-
-    background: white;
-    border-top: 1px solid #ddd;
-
-    z-index: 100;
+    transform: translateX(-50%);
+    border-top: 2px solid var(--accent);
+    background: var(--surface);
 }
 
 .bottom-nav a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 33.333%;
-    height: 64px;
-
-    padding: 8px 4px;
-
-    color: #800020;
-    font-size: 13px;
-    font-weight: bold;
-    text-align: center;
-
-    white-space: nowrap;
-}
-
-
-/* =========================================================
-   СТРАНИЦА ЛЕНТЫ
-   ========================================================= */
-
-.feed-page {
-    margin: 0;
-    padding: 0;
-
-    background: #000;
-
-    overflow: hidden;
-}
-
-.feed {
-    width: 390px;
-    height: calc(100vh - 64px);
-
-    margin: 0 auto;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.feed-card {
-    position: relative;
-
-    width: 100%;
-    height: 100%;
-
-    overflow: hidden;
-
-    background: #000;
-}
-
-.feed-video {
-    position: absolute;
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    background: #000;
-}
-
-
-/* =========================================================
-   ИНФОРМАЦИЯ ПОВЕРХ ВИДЕО
-   ========================================================= */
-
-.feed-overlay {
-    position: absolute;
-    inset: 0;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-
-    padding: 20px 16px 18px;
-
-    color: white;
-
-    background: linear-gradient(
-        to bottom,
-        transparent 20%,
-        rgba(0, 0, 0, 0.15) 45%,
-        rgba(0, 0, 0, 0.9) 100%
-    );
-}
-
-.feed-description {
-    max-width: 100%;
-    max-height: 75%;
-
-    overflow-y: auto;
-}
-
-.feed-description h1 {
-    margin: 0 0 6px;
-
-    font-size: 21px;
-    line-height: 1.15;
-
-    color: white;
-}
-
-.feed-description h2 {
-    margin: 0 0 8px;
-
-    font-size: 15px;
-    line-height: 1.2;
-
-    color: white;
-}
-
-.feed-description p {
-    margin: 5px 0;
-
-    font-size: 12px;
-    line-height: 1.25;
-}
-
-
-/* =========================================================
-   ИНФОРМАЦИЯ ОБ ИСТОЧНИКЕ
-   ========================================================= */
-
-.source-info {
-    margin-top: 12px;
-    padding-top: 8px;
-
-    border-top: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.source-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-
-    gap: 8px;
-
-    padding: 5px 0;
-
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-
-    font-size: 11px;
-    line-height: 1.25;
-}
-
-.source-row span {
-    color: #ddd;
-}
-
-.source-row strong {
-    max-width: 65%;
-
-    text-align: right;
-    overflow-wrap: anywhere;
-}
-
-
-/* =========================================================
-   ЛАЙКИ
-   ========================================================= */
-
-.feed-actions {
-    display: flex;
-    align-items: center;
-
-    margin-top: 10px;
-}
-
-.like-button {
-    display: flex;
-    align-items: center;
-
-    gap: 7px;
-
-    font-size: 24px;
-}
-
-.like-button span {
-    font-size: 15px;
-}
-
-
-/* =========================================================
-   СОБЫТИЯ
-   ========================================================= */
-
-.events {
-    display: none;
-}
-
-
-/* =========================================================
-   СТРАНИЦА ИСТОЧНИКОВ
-   ========================================================= */
-
-.chronicles-page {
-    width: 390px;
-    min-height: 100vh;
-
-    margin: 0 auto;
-    padding-bottom: 80px;
-
-    background: #f2f2f2;
-}
-
-.chronicles-container {
-    width: 390px;
-    min-height: 100vh;
-
-    margin: 0 auto;
-
-    padding: 25px 16px 90px;
-}
-
-
-/* ===== Заголовок ===== */
-
-.page-header {
-    margin-bottom: 20px;
-}
-
-.page-header h1 {
-    margin: 0 0 8px;
-
-    font-size: 28px;
-    color: #800020;
-}
-
-.page-header p {
-    margin: 0;
-
-    color: #666;
-    font-size: 14px;
-}
-
-
-/* ===== Фильтр ===== */
-
-.filter-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    margin-bottom: 22px;
-    padding: 16px;
-
-    background: white;
-    border-radius: 14px;
-}
-
-.filter-form label {
-    font-size: 14px;
-    font-weight: bold;
-
-    color: #800020;
-}
-
-.filter-form input {
-    width: 100%;
-
-    padding: 10px;
-
-    border: 1px solid #ccc;
-    border-radius: 8px;
-
-    font-size: 14px;
-}
-
-.filter-form button {
-    padding: 11px;
-
-    border: none;
-    border-radius: 8px;
-
-    background: #111;
-    color: white;
-
-    font-size: 14px;
-    font-weight: bold;
-
-    cursor: pointer;
-}
-
-
-/* ===== Сетка источников ===== */
-
-.chronicles-grid {
     display: grid;
-
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 12px;
+    place-items: center;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 700;
 }
 
-
-/* ===== Карточка источника ===== */
-
-.chronicle-card {
-    overflow: hidden;
-
-    background: white;
-
-    border-radius: 12px;
-}
-
-.chronicle-card a {
-    display: block;
-}
-
-.chronicle-card img {
-    display: block;
-
-    width: 100%;
-    height: 145px;
-
-    object-fit: cover;
-}
-
-.chronicle-card h2 {
-    margin: 12px 10px 6px;
-
-    font-size: 15px;
-    line-height: 1.2;
-
-    color: #800020;
-}
-
-.chronicle-card p {
-    margin: 6px 10px;
-
-    font-size: 12px;
-    line-height: 1.3;
-
-    color: #666;
-}
-
-.chronicle-card p:last-child {
-    padding-top: 8px;
-    padding-bottom: 8px;
-
-    border-top: 1px solid #eee;
-
-    font-weight: bold;
-    color: #111;
-}
-
-
-/* ===== Нет результатов ===== */
-
-.empty-result {
-    padding: 25px;
-
-    background: white;
-    border-radius: 14px;
-
-    text-align: center;
-
-    color: #666;
-}
-
-
-/* =========================================================
-   СТРАНИЦА ДОБАВЛЕНИЯ
-   ========================================================= */
-
-.add-page {
-    width: 390px;
-    min-height: 100vh;
-
-    margin: 0 auto;
-    padding-bottom: 90px;
-
-    background: #f2f2f2;
-}
-
-.add-container {
-    width: 390px;
-    min-height: 100vh;
-
-    margin: 0 auto;
-
-    padding: 25px 16px 90px;
-}
-
-.add-form {
-    padding: 20px;
-
-    background: white;
-
-    border-radius: 16px;
-}
-
-
-/* ===== Разделы формы ===== */
-
-.form-section {
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-
-    border-bottom: 1px solid #eee;
-}
-
-.form-section:last-of-type {
-    border-bottom: none;
-    margin-bottom: 0;
-}
-
-.form-section h2 {
-    margin: 0 0 16px;
-
-    font-size: 19px;
-
-    color: #800020;
-}
-
-
-/* ===== Поля формы ===== */
-
-.form-field {
-    margin-bottom: 16px;
-}
-
-.form-field:last-child {
-    margin-bottom: 0;
-}
-
-.form-field label {
-    display: block;
-
-    margin-bottom: 7px;
-
-    font-size: 14px;
-    font-weight: bold;
-
-    color: #800020;
-}
-
-.form-field input,
-.form-field textarea {
-    width: 100%;
-
-    padding: 10px 11px;
-
-    border: 1px solid #ccc;
-    border-radius: 8px;
-
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-}
-
-.form-field textarea {
-    min-height: 110px;
-
-    resize: vertical;
-}
-
-
-/* ===== Поля друг под другом ===== */
-
-.form-row {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-}
-
-
-/* ===== Кнопка ===== */
-
-.add-button {
-    width: 100%;
-
-    padding: 12px;
-
-    border: none;
-    border-radius: 9px;
-
-    background: #111;
-    color: white;
-
-    font-size: 15px;
-    font-weight: bold;
-
-    cursor: pointer;
-}
-
-
-
-
-
-
-
-
-
-.feed-navigation {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin-top: 18px;
-    min-height: 36px;
-}
-
-/* Предыдущий — слева */
-.feed-navigation a[href*="feed"]:first-child {
-    margin-right: auto;
-}
-
-/* Следующий — справа */
-.feed-navigation a[href*="next=true"] {
-    margin-left: auto;
-}
-
-/* Если кнопка одна и это предыдущий */
-.feed-navigation a:only-child:not([href*="next=true"]) {
-    margin-right: auto;
-}
-
-/* Если кнопка одна и это следующий */
-.feed-navigation a:only-child[href*="next=true"] {
-    margin-left: auto;
-    margin-right: 0;
-}
-
-.feed-navigation a:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-html {
-    overflow-y: scroll;
+.bottom-nav a:hover,
+.bottom-nav a:focus-visible,
+.bottom-nav a.active {
+    background: var(--accent);
+    color: var(--surface);
 }
